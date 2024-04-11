@@ -10,33 +10,25 @@ function App() {
   contacts and appointments 
   */
  const [contacts, setContacts] = useState([{name: 'Bob Jones', phone: '5018172634', email: 'bobjones@gmail.com'}]);
- const [appointments, setAppointments] = useState([]);
+ const [appointments, setAppointments] = useState([{name: 'Bob Jones', contact: 'contact', date: '1/1/1111', time: '9:00'}]);
 
   /*
   Implement functions to add data to
   contacts and appointments
   */
  const addContact = contact => {
-  if (contact.name && contact.phone && contact.email) {
-    setContacts(prev => [contact, ...prev]);
-  } else {
-    console.error('invalid input: Check name, phone, and email');
-  }
+  setContacts(prev => [contact, ...prev]);
  }
 
  const addAppointment = appointment => {
-  if (appointment.name && appointment.contact && appointment.phone && appointment.email) {
-    setAppointments(prev => [appointment, ...prev]);
-  } else {
-    console.error('invalid input: Check name, contact, phone, and email');
-  }
+  setAppointments(prev => [appointment, ...prev]);
  }
 
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={ <Root/> }>
       <Route index element={ <Navigate to={ROUTES.CONTACTS} replace/> }/>
-      <Route path={ROUTES.CONTACTS} element={ <ContactsPage contacts={contacts} setContacts={setContacts} /> /* Add props to ContactsPage */ }/>
-      <Route path={ROUTES.APPOINTMENTS} element={ <AppointmentsPage appointments={appointments} setAppointments={setAppointments} /> /* Add props to AppointmentsPage */ }/>
+      <Route path={ROUTES.CONTACTS} element={ <ContactsPage contacts={contacts} setContacts={setContacts} addContact={addContact} /> /* Add props to ContactsPage */ }/>
+      <Route path={ROUTES.APPOINTMENTS} element={ <AppointmentsPage appointments={appointments} setAppointments={setAppointments} addAppointment={addAppointment} contacts={contacts} /> /* Add props to AppointmentsPage */ }/>
     </Route>
   ));
   

@@ -26,10 +26,21 @@ export const ContactsPage = (props) => {
     */
     for (let i = 0; i < props.contacts.length; i++) {
       if (name !== props.contacts[i].name) {
-        props.addContact(e);
+        const form = e.target;
+        const formDataObject = {};
+
+        for (let element of form.elements) {
+          if (element.tagName === 'INPUT') {
+            formDataObject[element.name] = element.value;
+          }
+        }
+
+        props.addContact(formDataObject);
+
         setName('');
         setPhone('');
         setEmail('');
+        break;
       } else {
         setName('');
         console.error('Duplicate name: Try a different name');
@@ -51,7 +62,7 @@ export const ContactsPage = (props) => {
       <hr />
       <section>
         <h2>Contacts</h2>
-        <TileList objects={props.contacts} />
+        <TileList items={props.contacts} />
       </section>
     </div>
   );
